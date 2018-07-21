@@ -24,6 +24,23 @@ Get a specific user profile by id.
 /user/:spotify-user-id
 ```
 
+Create a user.
+* POST  /user
+```
+/user
+```
+Example post body:
+```
+{
+    "username": "Johnny",
+    "displayName": "Johnny",
+    "email": "johnny@jam.com",
+    "spotifyUrl": "https://open.spotify.com/user/9999999999999",
+    "spotifyUri": "spotify:user:9999999999999",
+    "spotifyId": "9999999999999"
+}
+```
+
 #### Library
 
 Return all saved albums for the given user.
