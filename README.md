@@ -1,6 +1,6 @@
 # groupify
 
-### API
+## API
 
 #### Health
 
@@ -8,6 +8,20 @@ Make sure this bad boy is even running.
 * GET   /health/ping
 ```
 /health/ping
+```
+
+#### User
+
+Get the user profile for the given user.
+* GET   /user/me
+```
+/user/me
+```
+
+Get a specific user profile by id.
+* GET   /user/:id
+```
+/user/:spotify-user-id
 ```
 
 #### Library
