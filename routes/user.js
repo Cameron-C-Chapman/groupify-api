@@ -18,7 +18,8 @@ router.get('/me', (req, res) => {
     });
     spotify.getMe()
     .then((response) => {
-        res.status(200).json(response.body);
+        const user = { user: response.body };
+        res.status(200).json(user);
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
@@ -39,7 +40,8 @@ router.get('/:id', (req, res) => {
     });
     spotify.getUser(req.params.id)
     .then((response) => {
-        res.status(200).json(response.body);
+        const user = { user: response.body };
+        res.status(200).json(user);
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
