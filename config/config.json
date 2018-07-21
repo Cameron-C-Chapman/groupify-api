@@ -1,0 +1,23 @@
+{
+  "development": {
+    "use_env_variable": "DB_URL",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": true
+    }
+  },
+  "test": {
+    "use_env_variable": "DB_URL",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": true
+    }
+  },
+  "production": {
+    "use_env_variable": "DB_URL",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": true
+    }
+  }
+}
