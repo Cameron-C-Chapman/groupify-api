@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   var user = sequelize.define('user', {
     username: DataTypes.STRING,
     display_name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    spotify_url: DataTypes.STRING,
+    spotify_uri: DataTypes.STRING,
+    spotify_id: DataTypes.STRING,
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

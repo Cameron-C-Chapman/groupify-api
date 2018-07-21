@@ -2,6 +2,18 @@ const { user: User, user_auth: User_auth, group: Group, } = require('../models')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const extract = fn => {
+  return (...args) => fn(...args).then(ob => {
+    return ob.toJSON();
+  });
+};
+
+const extractList = fn => {
+  return (...args) => fn(...args).then(arr => {
+    return arr.map(ob => ob.toJSON());
+  });
+};
+
 const create = params => {
   const { name, user_id } = params;
   return Group.create({
@@ -31,7 +43,9 @@ const join = params => {
 const get = params => {
   const { group_id } = params;
   return Group.findOne({
-    id: group_id,
+    where: {
+      id: group_id,
+    },
   });
 };
 
@@ -40,8 +54,8 @@ const members = params => {
 };
 
 module.exports = {
-  create,
-  join,
-  get,
-  members,
+  create: extract(create),
+  join: extract(join),
+  get: extract(get),
+  members: extractList(members),
 };
