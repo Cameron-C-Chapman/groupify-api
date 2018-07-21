@@ -2,6 +2,12 @@ const { user, user_auth, group, } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const extract = fn => {
+  return (...args) => fn(...args).then(ob => {
+    return ob.toJSON();
+  });
+};
+
 const authenticate = (params) => {
   const { access_token, refresh_token, expires_in, user_id } = params;
   user_auth.update({
@@ -19,11 +25,7 @@ const authenticate = (params) => {
 };
 
 const create = (params) => {
-  const { username, display_name } = params;
-
-  return user.create({
-    username, display_name
-  }).then(user => {
+  return user.create(params).then(user => {
     user_auth.create({ user_id: user.id });
     return user;
   });
@@ -36,7 +38,7 @@ const find = (params) => {
 };
 
 module.exports = {
-  authenticate,
-  create,
-  find,
+  authenticate: extract(authenticate),
+  create: extract(create),
+  find: extract(find),
 };
