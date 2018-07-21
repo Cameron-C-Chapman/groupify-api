@@ -43,3 +43,17 @@ Return all saved tracks for the given user.
 ```
 /library/tracks?limit=10&offset=0
 ```
+
+#### Playlists
+
+Get the playlists for the given user.
+* GET   /playlist/me
+```
+/playlist/me
+```
+
+Get the playlists for a specific spotify user id.
+* GET   /playlist/:spotify-user-id
+```
+/playlist/:spotify-user-id
+```
