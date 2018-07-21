@@ -17,7 +17,7 @@ const DEFAULT_OFFSET = 0;
  *      OPTIONAL: limit
  *      OPTIONAL: offset
  * 
- * @returns {Array} Spotify album objects   
+ * @returns {Object} Spotify album objects   
  */
 router.get('/albums', (req, res) => {
     const spotify = new SpotifyWebApi({
@@ -28,7 +28,8 @@ router.get('/albums', (req, res) => {
         offset: req.query.offset ? req.query.offset : DEFAULT_OFFSET,
     })
     .then((response) => {
-        res.status(200).json(response.body.items);
+        const albums = { albums: response.body.items };
+        res.status(200).json(albums);
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
@@ -44,15 +45,21 @@ router.get('/albums', (req, res) => {
  * Query Parameters:
  *      REQUIRED: ids (comma seperated list of album ids)
  * 
- * @returns {Array} boolean    
+ * @returns {Object} Map of album ids to boolean values representing if the album is saved for the user or not    
  */
 router.get('/albums/contains', (req, res) => {
     const spotify = new SpotifyWebApi({
         accessToken: requestUtils.getAccessTokenFromHeader(req.get('Authorization'))
     });
-    spotify.containsMySavedAlbums(req.query.ids.split(','))
+    const albumIds = req.query.ids.split(',');
+    spotify.containsMySavedAlbums(albumIds)
     .then((response) => {
-        res.status(200).json(response.body);
+        let albumIdsMap = albumIds.map((id, ix) => {
+            let obj = {};
+            obj[id] = response.body[ix];
+            return obj;
+        });
+        res.status(200).json({ albumContainsMap: albumIdsMap });
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
@@ -69,7 +76,7 @@ router.get('/albums/contains', (req, res) => {
  *      OPTIONAL: limit
  *      OPTIONAL: offset
  * 
- * @returns {Array} Spotify track objects   
+ * @returns {Object} Spotify track objects   
  */
 router.get('/tracks', (req, res) => {
     const spotify = new SpotifyWebApi({
@@ -80,7 +87,8 @@ router.get('/tracks', (req, res) => {
         offset: req.query.offset ? req.query.offset : DEFAULT_OFFSET,
     })
     .then((response) => {
-        res.status(200).json(response.body.items);
+        const tracks = { tracks: response.body.items };
+        res.status(200).json(tracks);
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
