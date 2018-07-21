@@ -1,0 +1,20 @@
+{
+  "name": "groupify",
+  "version": "0.1.0",
+  "description": "Hack Midwest 2018 project for team FanThreeSixty.",
+  "main": "server.js",
+  "repository": "git@github.com:Cameron-C-Chapman/groupify.git",
+  "author": "Cameron Chapman <Cameron.C.Chapman@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start:dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3",
+    "spotify-web-api-node": "^3.1.1"
+  }
+}
