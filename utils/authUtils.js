@@ -8,9 +8,9 @@ const writeAuth = (req, res, next) => {
     access_token = getAccessTokenFromHeader(access_token);
     persist.User.updateAuth({
       spotify_id, access_token,
-    }).then(() => next(req, res));
+    }).then(() => next());
   } else {
-    next(req, res);
+    next();
   }
 };
 
