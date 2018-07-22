@@ -44,11 +44,10 @@ const update = params => {
         console.log('trackUris = ', trackUris);
         return User.getAuth({ id: group.user_id })
           .then(auth => {
-            return SpotifyService.addToPlaylist({ auth, tracks: trackUris, playlist_id: group.playlist_id });
             return SpotifyService.getPlaylistTracks({ auth, playlist_id: group.playlist_id, })
               .then(existingTracks => {
                 // return SpotifyService.addToPlaylist({ auth, tracks: flatten(trackUris).filter(tr => !existingTracks.includes(tr)), playlist_id: group.playlist_id });
-                return SpotifyService.addToPlaylist({ auth, tracks: trackUris, playlist_id: group.playlist_id });
+                return SpotifyService.addToPlaylist({ auth, tracks: flatten(trackUris), playlist_id: group.playlist_id });
               });
           });
       });
