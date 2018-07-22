@@ -21,6 +21,7 @@ const getTopTracks = member => {
       spotify.setAccessToken(auth.access_token);
       return spotify.getMyTopTracks()
         .then(data => {
+          console.log('my top tracks = ', data.body.items);
           return Promise.resolve(data.body.items.map(item => item.uri));
         });
     });
@@ -38,14 +39,15 @@ const update = params => {
   return Group.get({ group_id }).then(group => {
     return Group.members({ group_id })
       .then(members => {
-        console.log('members: ' + members.length);
         return Promise.all(members.map(getTopTracks));
       }).then(trackUris => {
+        console.log('trackUris = ', trackUris);
         return User.getAuth({ id: group.user_id })
           .then(auth => {
             return SpotifyService.getPlaylistTracks({ auth, playlist_id: group.playlist_id, })
               .then(existingTracks => {
-                return SpotifyService.addToPlaylist({ auth, tracks: flatten(trackUris).filter(tr => !existingTracks.includes(tr)), playlist_id: group.playlist_id });
+                // return SpotifyService.addToPlaylist({ auth, tracks: flatten(trackUris).filter(tr => !existingTracks.includes(tr)), playlist_id: group.playlist_id });
+                return SpotifyService.addToPlaylist({ auth, tracks: trackUris, playlist_id: group.playlist_id });
               });
           });
       });
