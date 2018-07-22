@@ -14,6 +14,18 @@ const getSavedTracks = member => {
     });
 };
 
+const getTopTracks = member => {
+  const spotify = new Spotify();
+  return User.getAuth({ id: member.id })
+    .then(auth => {
+      spotify.setAccessToken(auth.access_token);
+      return spotify.getMyTopTracks()
+        .then(data => {
+          return Promise.resolve(data.body.items.map(item => item.uri));
+        });
+    });
+};
+
 const flatten = listOfLists => {
   let master = [];
   listOfLists.forEach(list => list.forEach(item => master.push(item)));
@@ -27,7 +39,7 @@ const update = params => {
     return Group.members({ group_id })
       .then(members => {
         console.log('members: ' + members.length);
-        return Promise.all(members.map(getSavedTracks));
+        return Promise.all(members.map(getTopTracks));
       }).then(trackUris => {
         return User.getAuth({ id: group.user_id })
           .then(auth => {

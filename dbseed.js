@@ -6,7 +6,7 @@ models.sequelize.sync({force:true}).then(() => {
   return User.create({
     username: 'Cam',
     display_name: 'Camron',
-    spotify_id: '2zhj9omwsh7jh26ajvo0cewq4',
+    spotify_id: process.env.USER_ID,
     spotify_uri: 'spotify:app:foo',
     email: 'foo@bar.com',
   }).then(user => {
