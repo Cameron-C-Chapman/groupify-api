@@ -51,10 +51,40 @@ const groups = params => {
   }).then(user => user.getGroups());
 };
 
+const addFriend = params => {
+  const { user_id, friend_id, } = params;
+  return User.findOne({
+    where: {
+      id: user_id,
+    }
+  }).then(user => {
+    return User.findOne({
+      where: {
+        id: friend_id,
+      }
+    }).then(friend => {
+      return user.addFriend(friend).then(() => friend.addFriend(user));
+    });
+  });
+};
+
+const getFriends = params => {
+  const { user_id, } = params;
+
+  return User.findOne({
+    where: {
+      id: user_id,
+    }
+  }).then(user => user.getFriend());
+};
+
+
 module.exports = {
   authenticate: extract(authenticate),
   create: extract(create),
   find: extract(find),
   getAuth: extract(getAuth),
   groups: extractList(groups),
+  addFriend,
+  getFriends: extractList(getFriends),
 };
