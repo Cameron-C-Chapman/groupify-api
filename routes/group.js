@@ -4,7 +4,9 @@ const PlaylistService = require('../service/playlist');
 
 const { Group } = require('../persist');
 
-
+/**
+ * Get all groups.
+ */
 router.get('/', (req, res) => {
     Group.getAll()
         .then((groups) => {
@@ -16,6 +18,9 @@ router.get('/', (req, res) => {
         });
 });
 
+/**
+ * Get group by id.
+ */
 router.get('/:groupId', (req, res) => {
     Group.get({ group_id: req.params.groupId })
         .then((group) => {
@@ -27,6 +32,9 @@ router.get('/:groupId', (req, res) => {
         });
 });
 
+/**
+ * Get a groups members.
+ */
 router.get('/:groupId/member', (req, res) => {
     Group.members({ group_id: req.params.groupId })
         .then((members) => {
@@ -38,6 +46,9 @@ router.get('/:groupId/member', (req, res) => {
         });
 });
 
+/**
+ * Get a users groups.
+ */
 router.get('/user/:userId', (req, res) => {
     Group.getAll({ spotify_id: req.params.userId })
         .then((groups) => {
@@ -45,10 +56,13 @@ router.get('/user/:userId', (req, res) => {
         })
         .catch((error) => {
             console.log('GET /group/user/:userId = ', { error: error, requestParams: req.params });
-            res.status(500).status('oh schnap, stuff got weird');
+            res.status(500).send('oh schnap, stuff got weird');
         });
 });
 
+/**
+ * Create a group.
+ */
 router.post('/', (req, res) => {
     let newGroup = {
         name: req.body.name,
@@ -65,6 +79,9 @@ router.post('/', (req, res) => {
         });
 });
 
+/**
+ * Add a user to a group.
+ */
 router.post('/:groupId/member', (req, res) => {
     let newGroupMember = {
         group_id: parseInt(req.params.groupId),

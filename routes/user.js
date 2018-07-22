@@ -101,7 +101,7 @@ router.put('/:userId', (req, res) => {
         first_name: req.body.firstName,
         last_name: req.body.lastName,
         phone_number: req.body.phoneNumber
-    }, { id: req.params.userId}).then((result) => {
+    }, { id: parseInt(req.params.userId)}).then((result) => {
         res.status(201).send(result);
     }).catch((error) => {
         console.log('PUT /user/:userId = ', { error: error, requestParams: req.params, requestBody: req.body });
