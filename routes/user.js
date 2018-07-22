@@ -3,6 +3,7 @@ const router = express.Router();
 
 const SpotifyWebApi = require('spotify-web-api-node');
 const requestUtils = require('../utils/requestUtils');
+const userUtils = require('../utils/userUtils');
 const { User } = require('../persist');
 
 /**
@@ -19,8 +20,16 @@ router.get('/me', (req, res) => {
     });
     spotify.getMe()
     .then((response) => {
-        const user = { user: response.body };
-        res.status(200).json(user);
+        const spotifyUser = response.body;
+        User.find({ spotify_id: response.body.id })
+            .then((result) => {
+                let mergedUser = userUtils.mergeUserTypes(spotifyUser, result[0].dataValues);
+                res.status(200).json({ user: mergedUser });
+            })
+            .catch((error) => {
+                console.log('GET /user/me = ', { error: error });
+                res.status(500).status('oh schnap, stuff got weird');
+            });
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
@@ -41,8 +50,16 @@ router.get('/:id', (req, res) => {
     });
     spotify.getUser(req.params.id)
     .then((response) => {
-        const user = { user: response.body };
-        res.status(200).json(user);
+        const spotifyUser = response.body;
+        User.find({ spotify_id: response.body.id })
+            .then((result) => {
+                let mergedUser = userUtils.mergeUserTypes(spotifyUser, result[0].dataValues);
+                res.status(200).json({ user: mergedUser });
+            })
+            .catch((error) => {
+                console.log('GET /user/me = ', { error: error });
+                res.status(500).status('oh schnap, stuff got weird');
+            });
     })
     .catch((error) => {
         res.status(error.statusCode).send(error.message);
@@ -69,7 +86,10 @@ router.post('/', (req, res) => {
         email: req.body.email,
         spotify_url: req.body.spotifyUrl,
         spotify_uri: req.body.spotifyUri,
-        spotify_id: req.body.spotifyId
+        spotify_id: req.body.spotifyId,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
+        phone_number: req.body.phoneNumber
     };
 
     User.create(newUser, requestUtils.getAccessTokenFromHeader(req.get('Authorization')))

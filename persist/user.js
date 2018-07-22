@@ -82,7 +82,7 @@ const getFriends = params => {
 module.exports = {
   authenticate: extract(authenticate),
   create: extract(create),
-  find: extract(find),
+  find: find,
   getAuth: extract(getAuth),
   groups: extractList(groups),
   addFriend,
