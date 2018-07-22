@@ -38,7 +38,7 @@ router.get('/:playlistId/user/:userId', (req, res) => {
     const spotify = new SpotifyWebApi({
         accessToken: requestUtils.getAccessTokenFromHeader(req.get('Authorization'))
     });
-    spotify.getUserPlaylists(req.params.userId, req.params.playlistId)
+    spotify.getPlaylist(req.params.userId, req.params.playlistId)
     .then((response) => {
         res.status(200).json(response.body);
     })
