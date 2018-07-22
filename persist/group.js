@@ -15,11 +15,25 @@ const extractList = fn => {
 };
 
 const create = params => {
-  const { name, user_id } = params;
+  const { name, user_id, user_spotify_id, } = params;
   return Group.create({
       name, user_id,
     }, {}).then(group => {
       return join({ group_id: group.id, user_id, }).then(j => group);
+    });
+};
+
+const setPlaylistId = params => {
+  const { playlist_id, group_id, } = params;
+
+  return Group.update({
+      playlist_id,
+    }, {
+      where: {
+        id: {
+          [Op.eq]: group_id,
+        }
+      }
     });
 };
 
@@ -35,7 +49,7 @@ const join = params => {
           id: group_id,
         }
       }).then(group => {
-        group.addMember(user);
+        return group.addMember(user);
       });
   });
 };
@@ -64,4 +78,5 @@ module.exports = {
   get: extract(get),
   getAll: extractList(getAll),
   members: extractList(members),
+  setPlaylistId,
 };
