@@ -2,7 +2,9 @@ const { User, Group } = require('./index');
 const models = require('../models');
 const Playlist = require('../service/playlist');
 
-Playlist.update({ group_id: 1 });
+User.groups({ id: 1 }).then(console.dir);
+
+// Playlist.update({ group_id: 1 });
 
 // models.sequelize.sync({force:true}).then(() => {
 //   return User.create({

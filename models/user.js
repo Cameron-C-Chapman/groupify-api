@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     spotify_url: DataTypes.STRING,
     spotify_uri: DataTypes.STRING,
     spotify_id: DataTypes.STRING,
+    phone_number: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
