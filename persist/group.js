@@ -79,7 +79,7 @@ const owner = params => {
 
 module.exports = {
   create: extract(create),
-  join: extract(join),
+  join: join,
   get: extract(get),
   getAll: extractList(getAll),
   members: extractList(members),

@@ -19,7 +19,7 @@ Get the user profile for the given user.
 ```
 
 Get a specific user profile by id.
-* GET   /user/:id
+* GET   /user/:spotifyUserId
 ```
 /user/:spotifyUserId
 ```
@@ -76,7 +76,8 @@ Example post body:
 ```
 {
     "name": "User's First Epic Playlist",
-    "user_id": 99
+    "user_id": 99,
+    spotify_id: 99asdfs99dfas9 
 }
 ```
 
