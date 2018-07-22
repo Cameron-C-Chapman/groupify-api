@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const models = require('./models');
+const authMiddleware = require('./utils/authUtils');
 
 const app = express();
 app.use(bodyParser.json());
+app.post(authMiddleware);
 
 const PORT = process.env.PORT || 9000;
 

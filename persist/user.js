@@ -14,6 +14,17 @@ const extractList = fn => {
   });
 };
 
+const updateAuth = params => {
+  const { spotify_id, access_token, refresh_token, expires_in, } = params;
+
+  return user_auth.update({
+      access_token, refresh_token, expires_in,
+    },
+    { where: {
+      spotify_id,
+    }});
+};
+
 const authenticate = (params) => {
   const { access_token, refresh_token, expires_in, user_id } = params;
   return user_auth.findOne({
@@ -87,4 +98,5 @@ module.exports = {
   groups: extractList(groups),
   addFriend,
   getFriends: extractList(getFriends),
+  updateAuth,
 };
