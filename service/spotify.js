@@ -12,6 +12,8 @@ const createPlaylist = params => {
 const addToPlaylist = params => {
   const { playlist_id, tracks, auth, } = params;
   console.log('tracks to add = ', tracks);
+  console.log('auth to add with: ', JSON.stringify(auth, null, 2));
+  console.log('playlist_id: ', JSON.stringify(playlist_id, null, 2));
   if (tracks.length) {
     const spotify = new Spotify();
 
