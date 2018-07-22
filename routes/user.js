@@ -72,11 +72,11 @@ router.post('/', (req, res) => {
         spotify_id: req.body.spotifyId
     };
 
-    User.create(newUser)
+    User.create(newUser, requestUtils.getAccessTokenFromHeader(req.get('Authorization')))
         .then((user) => {
             res.status(201).send(user);
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('POST /user = ', { error: error, requestBody: req.body });
             res.status(500).status('oh schnap, stuff got weird');
         });

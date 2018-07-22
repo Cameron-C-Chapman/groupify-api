@@ -38,11 +38,11 @@ router.get('/:groupId/member', (req, res) => {
 });
 
 router.get('/user/:userId', (req, res) => {
-    Group.getAll({ user_id: req.params.userId })
+    Group.getAll({ spotify_id: req.params.userId })
         .then((groups) => {
             res.status(200).send({ groups: groups });
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('GET /group/user/:userId = ', { error: error, requestParams: req.params });
             res.status(500).status('oh schnap, stuff got weird');
         });
@@ -58,9 +58,9 @@ router.post('/', (req, res) => {
         .then((group) => {
             res.status(201).send(group);
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('POST /group = ', { error: error, requestBody: req.body });
-            res.status(500).status('oh schnap, stuff got weird');
+            res.status(500).send('oh schnap, stuff got weird');
         });
 });
 
