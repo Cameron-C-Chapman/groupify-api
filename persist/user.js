@@ -33,6 +33,12 @@ const create = (params, accessToken) => {
   });
 };
 
+const update = (values, params) => {
+  return User.update(values, {
+    where: params
+  });
+}
+
 const find = (params) => {
   return User.findAll({
     where: params,
@@ -82,6 +88,7 @@ const getFriends = params => {
 module.exports = {
   authenticate: extract(authenticate),
   create: extract(create),
+  update: update,
   find: find,
   getAuth: extract(getAuth),
   groups: extractList(groups),
