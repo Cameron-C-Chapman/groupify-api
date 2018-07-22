@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     schema: 'groupify'
   });
   user.associate = function(models) {
-    user.hasOne(models.user_auth);
+    user.hasOne(models.user_auth, { as: 'auth' });
     user.belongsToMany(user, { as: 'friend', through: 'user_friend' });
     user.belongsToMany(models.group, { as: 'groups', through: 'group_member' });
     user.hasMany(models.group, { as: 'owner' });

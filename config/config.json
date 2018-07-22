@@ -1,10 +1,6 @@
 {
   "development": {
-    "use_env_variable": "DB_URL",
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": true
-    }
+    "use_env_variable": "DB_URL"
   },
   "test": {
     "use_env_variable": "DB_URL",

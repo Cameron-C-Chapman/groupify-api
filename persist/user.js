@@ -1,4 +1,4 @@
-const { user, user_auth, group, } = require('../models');
+const { user: User, user_auth, group: Group, } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -10,35 +10,38 @@ const extract = fn => {
 
 const authenticate = (params) => {
   const { access_token, refresh_token, expires_in, user_id } = params;
-  user_auth.update({
-      access_token,
-      refresh_token,
-      expires_in,
-    },
-    {
-      where: {
-        user_id: {
-          [Op.eq]: user_id
-        }
-      }
+  return user_auth.findOne({
+    where: {
+      user_id,
+    }}).then(auth => {
+      return auth.update({ access_token, refresh_token, expires_in, user_id, });
     });
 };
 
 const create = (params) => {
-  return user.create(params).then(user => {
-    user_auth.create({ user_id: user.id });
-    return user;
+  return User.create(params).then(user => {
+    return user_auth.create({ user_id: user.id }).then(auth => {
+      user.setAuth(auth);
+      return user;
+    });
   });
 };
 
 const find = (params) => {
-  return user.findAll({
+  return User.findAll({
     where: params,
   });
+};
+
+const getAuth = params => {
+  return User.findOne({
+    where: params,
+  }).then(user => user.getAuth());
 };
 
 module.exports = {
   authenticate: extract(authenticate),
   create: extract(create),
   find: extract(find),
+  getAuth: extract(getAuth),
 };
