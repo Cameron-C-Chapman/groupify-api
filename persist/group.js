@@ -1,5 +1,6 @@
 const { user: User, user_auth: User_auth, group: Group, } = require('../models');
 const Sequelize = require('sequelize');
+const SpotifyService = require('../service/spotify');
 const Op = Sequelize.Op;
 
 const extract = fn => {
@@ -15,25 +16,20 @@ const extractList = fn => {
 };
 
 const create = params => {
-  const { name, user_id, user_spotify_id, } = params;
-  return Group.create({
-      name, user_id,
-    }, {}).then(group => {
-      return join({ group_id: group.id, user_id, }).then(j => group);
-    });
-};
-
-const setPlaylistId = params => {
-  const { playlist_id, group_id, } = params;
-
-  return Group.update({
-      playlist_id,
-    }, {
-      where: {
-        id: {
-          [Op.eq]: group_id,
-        }
-      }
+  const { name, user_id, } = params;
+  return User_auth.findOne({
+    where: {
+      user_id,
+    }
+  }).then(auth => {
+    return SpotifyService.createPlaylist({ name, user_id, auth })
+      .then(playlist => {
+        return Group.create({
+            name, user_id, owner_spotify_id: auth.spotify_id, playlist_id: playlist.id,
+          }, {}).then(group => {
+            return join({ group_id: group.id, user_id, }).then(j => group);
+          });
+      });
     });
 };
 
@@ -78,5 +74,4 @@ module.exports = {
   get: extract(get),
   getAll: extractList(getAll),
   members: extractList(members),
-  setPlaylistId,
 };

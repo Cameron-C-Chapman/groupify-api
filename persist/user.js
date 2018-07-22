@@ -20,7 +20,7 @@ const authenticate = (params) => {
 
 const create = (params) => {
   return User.create(params).then(user => {
-    return user_auth.create({ user_id: user.id }).then(auth => {
+    return user_auth.create({ user_id: user.id, spotify_id: user.spotify_id }).then(auth => {
       user.setAuth(auth);
       return user;
     });
