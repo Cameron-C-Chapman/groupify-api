@@ -64,4 +64,20 @@ router.post('/', (req, res) => {
         });
 });
 
+router.post('/:groupId/member', (req, res) => {
+    let newGroupMember = {
+        group_id: parseInt(req.params.groupId),
+        user_id: req.body.user_id
+    };
+
+    Group.join(newGroupMember)
+        .then((member) => {
+            res.status(201).send();
+        })
+        .catch((error) => {
+            console.log('POST /group/:groupId/member = ', { error: error, requestParams: req.params, requestBody: req.body });
+            res.status(500).send('oh schnap, stuff got weird');
+        });
+});
+
 module.exports = router;
