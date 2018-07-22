@@ -10,9 +10,9 @@ router.get('/', (req, res) => {
         .then((groups) => {
             res.status(200).send({ groups: groups });
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('GET /group = ', { error: error });
-            res.status(500).status('oh schnap, stuff got weird');
+            res.status(500).send('oh schnap, stuff got weird');
         });
 });
 
@@ -21,9 +21,9 @@ router.get('/:groupId', (req, res) => {
         .then((group) => {
             res.status(200).send(group);
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('GET /group/:groupId = ', { error: error, requestParams: req.params });
-            res.status(500).status('oh schnap, stuff got weird');
+            res.status(500).send('oh schnap, stuff got weird');
         });
 });
 
@@ -32,9 +32,9 @@ router.get('/:groupId/member', (req, res) => {
         .then((members) => {
             res.status(200).send({ members: members });
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('GET /group/:groupId/members = ', { error: error, requestParams: req.params });
-            res.status(500).status('oh schnap, stuff got weird');
+            res.status(500).send('oh schnap, stuff got weird');
         });
 });
 
