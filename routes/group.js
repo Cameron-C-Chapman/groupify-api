@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const PlaylistService = require('../service/playlist');
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilio = require('twilio')(accountSid, authToken);
 
 const { Group } = require('../persist');
 
@@ -59,6 +62,18 @@ router.get('/user/:userId', (req, res) => {
             res.status(500).send('oh schnap, stuff got weird');
         });
 });
+
+router.post('/invite', (req, res) => {
+    let message = req.body.message;
+    let to = req.body.phone;
+    console.dir(req.body);
+
+    twilio.messages
+        .create({from: '+19138457817', body: message, to, })
+        .then(message => { console.log(message.sid); return message; })
+        .then(() => res.status(201).send());
+});
+
 
 /**
  * Create a group.
