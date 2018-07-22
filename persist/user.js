@@ -8,6 +8,12 @@ const extract = fn => {
   });
 };
 
+const extractList = fn => {
+  return (...args) => fn(...args).then(arr => {
+    return arr.map(ob => ob.toJSON());
+  });
+};
+
 const authenticate = (params) => {
   const { access_token, refresh_token, expires_in, user_id } = params;
   return user_auth.findOne({
@@ -39,9 +45,16 @@ const getAuth = params => {
   }).then(user => user.getAuth());
 };
 
+const groups = params => {
+  return User.findOne({
+    where: params,
+  }).then(user => user.getGroups());
+};
+
 module.exports = {
   authenticate: extract(authenticate),
   create: extract(create),
   find: extract(find),
   getAuth: extract(getAuth),
+  groups: extractList(groups),
 };
