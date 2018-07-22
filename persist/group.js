@@ -68,10 +68,17 @@ const members = params => {
   return get(params).then(group => group.getMembers());
 };
 
+const owner = params => {
+  return get(params).then(group => {
+    return User.findOne({ id: group.user_id });
+  });
+};
+
 module.exports = {
   create: extract(create),
   join: extract(join),
   get: extract(get),
   getAll: extractList(getAll),
   members: extractList(members),
+  owner: extract(owner),
 };
