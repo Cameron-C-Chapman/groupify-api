@@ -40,9 +40,11 @@ router.get('/:playlistId/user/:userId', (req, res) => {
     });
     spotify.getPlaylist(req.params.userId, req.params.playlistId)
     .then((response) => {
+        console.dir(response);
         res.status(200).json(response.body);
     })
     .catch((error) => {
+        console.dir(error);
         res.status(error.statusCode).send(error.message);
     });
 });

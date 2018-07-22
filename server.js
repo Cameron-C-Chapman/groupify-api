@@ -5,7 +5,7 @@ const authMiddleware = require('./utils/authUtils');
 
 const app = express();
 app.use(bodyParser.json());
-app.post(authMiddleware);
+app.use(authMiddleware);
 
 const PORT = process.env.PORT || 9000;
 
