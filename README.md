@@ -41,6 +41,39 @@ Example post body:
 }
 ```
 
+#### Group
+
+Return all groups.
+* GET   /group
+```
+/group
+```
+
+Return group by id.
+* GET   /group/:groupId
+```
+/group/:groupId
+```
+
+Return all groups for the given user id.
+* GET   /group/user/:userId
+```
+/group/user/:userId
+```
+
+Create a group.
+* POST  /group
+```
+/group
+```
+Example post body:
+```
+{
+    "name": "User's First Epic Playlist",
+    "user_id": 99
+}
+```
+
 #### Library
 
 Return all saved albums for the given user.
