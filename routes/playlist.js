@@ -27,6 +27,27 @@ router.get('/me', (req, res) => {
 });
 
 /**
+ * Get the playlist for a specific playlist id and user id.
+ * 
+ * Headers: 
+ *      REQUIRED: Authorization: Bearer <SPOTIFY ACCESS TOKEN>
+ * 
+ * @returns {Object} Spotify playlist.  
+ */
+router.get('/:playlistId/user/:userId', (req, res) => {
+    const spotify = new SpotifyWebApi({
+        accessToken: requestUtils.getAccessTokenFromHeader(req.get('Authorization'))
+    });
+    spotify.getUserPlaylists(req.params.userId, req.params.playlistId)
+    .then((response) => {
+        res.status(200).json(response.body);
+    })
+    .catch((error) => {
+        res.status(error.statusCode).send(error.message);
+    });
+});
+
+/**
  * Get the playlists for a specific spotify user id.
  * 
  * Headers: 
@@ -34,7 +55,7 @@ router.get('/me', (req, res) => {
  * 
  * @returns {Object} Spotify playlists.  
  */
-router.get('/:userId', (req, res) => {
+router.get('/user/:userId', (req, res) => {
     const spotify = new SpotifyWebApi({
         accessToken: requestUtils.getAccessTokenFromHeader(req.get('Authorization'))
     });

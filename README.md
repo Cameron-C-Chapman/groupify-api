@@ -21,7 +21,7 @@ Get the user profile for the given user.
 Get a specific user profile by id.
 * GET   /user/:id
 ```
-/user/:spotify-user-id
+/user/:spotifyUserId
 ```
 
 Create a user.
@@ -102,8 +102,14 @@ Get the playlists for the given user.
 /playlist/me
 ```
 
-Get the playlists for a specific spotify user id.
-* GET   /playlist/:spotify-user-id
+Get the playlist by playlist id and user id.
+* GET   /playlist/:playlistId/user/:userId
 ```
-/playlist/:spotify-user-id
+/playlist/:playlistId/user/:spotifyUserId
+```
+
+Get the playlists for a specific spotify user id.
+* GET   /playlist/user/:spotifyUserId
+```
+/playlist/user/:spotifyUserId
 ```

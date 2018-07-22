@@ -1,7 +1,7 @@
 {
-  "name": "groupify",
+  "name": "groupify-api",
   "version": "0.1.0",
-  "description": "Hack Midwest 2018 project for team FanThreeSixty.",
+  "description": "Groupify public API. A Hack Midwest 2018 project for team FanThreeSixty.",
   "main": "server.js",
   "repository": "git@github.com:Cameron-C-Chapman/groupify.git",
   "author": "Cameron Chapman <Cameron.C.Chapman@gmail.com>",
