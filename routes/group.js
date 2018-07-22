@@ -3,10 +3,11 @@ const router = express.Router();
 
 const { Group } = require('../persist');
 
+
 router.get('/', (req, res) => {
     Group.getAll()
         .then((groups) => {
-            res.status(200).send(groups);
+            res.status(200).send({ groups: groups });
         })
         .catch(() => {
             console.log('GET /group = ', { error: error });
@@ -25,10 +26,21 @@ router.get('/:groupId', (req, res) => {
         });
 });
 
+router.get('/:groupId/member', (req, res) => {
+    Group.members({ group_id: req.params.groupId })
+        .then((members) => {
+            res.status(200).send({ members: members });
+        })
+        .catch(() => {
+            console.log('GET /group/:groupId/members = ', { error: error, requestParams: req.params });
+            res.status(500).status('oh schnap, stuff got weird');
+        });
+});
+
 router.get('/user/:userId', (req, res) => {
     Group.getAll({ user_id: req.params.userId })
         .then((groups) => {
-            res.status(200).send(groups);
+            res.status(200).send({ groups: groups });
         })
         .catch(() => {
             console.log('GET /group/user/:userId = ', { error: error, requestParams: req.params });

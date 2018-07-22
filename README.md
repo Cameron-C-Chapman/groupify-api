@@ -55,6 +55,12 @@ Return group by id.
 /group/:groupId
 ```
 
+Return all members of the given group.
+* GET   /group/:groupId/member
+```
+/group/:groupId/member
+```
+
 Return all groups for the given user id.
 * GET   /group/user/:userId
 ```
