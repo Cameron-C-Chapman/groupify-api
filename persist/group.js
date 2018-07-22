@@ -49,6 +49,11 @@ const get = params => {
   });
 };
 
+const getAll = params => {
+  const { user_id } = params;
+  return params ? Group.findAll( { where: { user_id: user_id }} ) : Group.findAll();
+};
+
 const members = params => {
   return get(params).then(group => group.getMembers());
 };
@@ -57,5 +62,6 @@ module.exports = {
   create: extract(create),
   join: extract(join),
   get: extract(get),
+  getAll: extractList(getAll),
   members: extractList(members),
 };
