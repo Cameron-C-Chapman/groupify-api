@@ -60,8 +60,11 @@ const get = params => {
 };
 
 const getAll = params => {
-  const { user_id } = params;
-  return params ? Group.findAll( { where: { user_id: user_id }} ) : Group.findAll();
+  if (params) {
+    const { user_id } = params;
+    return Group.findAll( { where: { user_id: user_id }} );
+  }
+  return Group.findAll()
 };
 
 const members = params => {
