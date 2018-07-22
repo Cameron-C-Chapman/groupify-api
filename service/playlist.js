@@ -22,22 +22,6 @@ const update = params => {
     });
 };
 
-const create = params => {
-  const { name, user_id, spotify_id } = params;
-  const spotify = new Spotify();
-
-  return User.getAuth({ id: user_id })
-    .then(auth => {
-      spotify.setAccessToken(auth.access_token);
-      // return spotify.createPlaylist('2zhj9omwsh7jh26ajvo0cewq4', name)
-      return spotify.getPlaylist('2zhj9omwsh7jh26ajvo0cewq4', '1LgLvRbrzB1XE2d7G3nJKk')
-        .then(data => create(
-          return Group.setPlaylistId({ group_id, playlist_id: data.body.id, });
-        });
-    });
-};
-
 module.exports = {
   update,
-  create,
 };
