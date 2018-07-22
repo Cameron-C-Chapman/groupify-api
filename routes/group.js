@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const PlaylistService = require('../service/playlist');
 
 const { Group } = require('../persist');
 
@@ -73,6 +74,7 @@ router.post('/:groupId/member', (req, res) => {
     Group.join(newGroupMember)
         .then((member) => {
             res.status(201).send();
+            PlaylistService.update({ group_id: parseInt(req.params.groupId) });
         })
         .catch((error) => {
             console.log('POST /group/:groupId/member = ', { error: error, requestParams: req.params, requestBody: req.body });
